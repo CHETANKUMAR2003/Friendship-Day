@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Friendship Day</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            background: linear-gradient(90deg, #ff6f61, #d4fc79, #96e6a1, #ffcc33, #ff6f61);
+            background-size: 400% 400%;
+            animation: gradient 10s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        .message {
+            color: white;
+            font-size: 3em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            animation: text-flicker 3s linear infinite;
+        }
+
+        @keyframes text-flicker {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .balloons {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .balloon {
+            position: absolute;
+            bottom: -200px;
+            width: 60px;
+            height: 80px;
+            background: radial-gradient(circle at 30px 30px, #fff, #ff6f61);
+            border-radius: 50% 50% 50% 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-200px); }
+        }
+
+        .balloon:nth-child(2) {
+            left: 20%;
+            animation-duration: 7s;
+        }
+
+        .balloon:nth-child(3) {
+            left: 40%;
+            animation-duration: 8s;
+        }
+
+        .balloon:nth-child(4) {
+            left: 60%;
+            animation-duration: 9s;
+        }
+
+        .balloon:nth-child(5) {
+            left: 80%;
+            animation-duration: 10s;
+        }
+
+        .card {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 1s ease-in-out;
+            cursor: pointer;
+        }
+
+        .card::before, .card::after {
+            content: '';
+            position: absolute;
+            width: 50vw;
+            height: 100vh;
+            background: #ffcc33;
+            top: 0;
+            transition: transform 1s ease-in-out;
+        }
+
+        .card::before {
+            left: 0;
+        }
+
+        .card::after {
+            right: 0;
+        }
+
+        .card-front {
+            z-index: 1;
+            font-size: 3em;
+            color: #ff6f61;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .card.torn::before {
+            transform: translateX(-100%);
+        }
+
+        .card.torn::after {
+            transform: translateX(100%);
+        }
+
+        .multi-color-text {
+            background: linear-gradient(90deg, #ff6f61, #d4fc79, #96e6a1, #ffcc33, #ff6f61);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-text 3s ease infinite;
+        }
+
+        @keyframes gradient-text {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card" onclick="tearCard()">
+        <div class="card-front">Open Me!</div>
+    </div>
+    <div class="container">
+        <div class="message multi-color-text">Happy Friendship Day!</div>
+    </div>
+    <div class="balloons">
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+    </div>
+    <script>
+        function tearCard() {
+            const card = document.querySelector('.card');
+            card.classList.add('torn');
+            setTimeout(showCelebration, 1000);
+        }
+
+        function showCelebration() {
+            document.querySelector('.card').style.display = 'none';
+            document.querySelector('.container').style.display = 'flex';
+            document.querySelector('.balloons').style.display = 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const colors = ['#ff6f61', '#d4fc79', '#96e6a1', '#ffcc33', '#ff6f61'];
+            document.querySelectorAll('.balloon').forEach((balloon, index) => {
+                balloon.style.background = `radial-gradient(circle at 30px 30px, #fff, ${colors[index % colors.length]})`;
+            });
+        });
+    </script>
+</body>
+</html>
